@@ -1,1 +1,4 @@
 # 5FPY
+
+-- PYTHON 3.5
+-- DJANGO 1.9.8
