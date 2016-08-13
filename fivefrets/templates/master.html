@@ -23,8 +23,15 @@
 <body>
   {% include 'navbar.html' %}
   <div class="container-fluid">
-    {% block content %}
-    {% endblock %}
+    <div class="row">
+      <div class="col-md-3">
+        {% include 'sidebar.html' %}
+      </div>
+      <div class="col-md-9">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
   </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
