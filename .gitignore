@@ -1,3 +1,4 @@
-fivefrets/ffset.py
+fivefrets/fivefrets/ffset.py
 fivefrets/fivefrets/__pycache__/
 notebooks/.ipynb_checkpoints/
+semantic_ui/
