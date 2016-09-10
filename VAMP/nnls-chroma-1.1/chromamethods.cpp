@@ -8,7 +8,7 @@
 
   Centre for Digital Music, Queen Mary University of London.
   This file copyright 2008-2010 Matthias Mauch and QMUL.
-    
+
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License as
   published by the Free Software Foundation; either version 2 of the
@@ -36,10 +36,10 @@ using namespace boost;
 
 
 /** Special Convolution
-    Special convolution is as long as the convolvee, i.e. the first argument. 
-	In the "valid" core part of the convolution it contains the usual convolution 
-	values, but the parts at the beginning (ending) that would normally be 
-	calculated using zero padding simply have the same values as the first 
+    Special convolution is as long as the convolvee, i.e. the first argument.
+	In the "valid" core part of the convolution it contains the usual convolution
+	values, but the parts at the beginning (ending) that would normally be
+	calculated using zero padding simply have the same values as the first
 	(last) valid convolution bin.
 **/
 
@@ -52,7 +52,7 @@ vector<float> SpecialConvolution(vector<float> convolvee, vector<float> kernel)
 
     vector<float> Z(nNote,0);
     assert(lenKernel % 2 != 0); // no exception handling !!!
-    
+
     for (n = lenKernel - 1; n < lenConvolvee; n++) {
     	s=0.0;
     	for (m = 0; m < lenKernel; m++) {
@@ -63,15 +63,15 @@ vector<float> SpecialConvolution(vector<float> convolvee, vector<float> kernel)
         // cerr << n - lenKernel/2 << endl;
         Z[n -lenKernel/2] = s;
     }
-    
+
     // fill upper and lower pads
-    for (n = 0; n < lenKernel/2; n++) Z[n] = Z[lenKernel/2];    
-    for (n = lenConvolvee; n < lenConvolvee +lenKernel/2; n++) Z[n - lenKernel/2] = 
+    for (n = 0; n < lenKernel/2; n++) Z[n] = Z[lenKernel/2];
+    for (n = lenConvolvee; n < lenConvolvee +lenKernel/2; n++) Z[n - lenKernel/2] =
                                                                    Z[lenConvolvee - lenKernel/2 -  1];
     return Z;
 }
 
-float cospuls(float x, float centre, float width) 
+float cospuls(float x, float centre, float width)
 {
     float recipwidth = 1.0/width;
     if (abs(x - centre) <= 0.5 * width) {
@@ -80,7 +80,7 @@ float cospuls(float x, float centre, float width)
     return 0.0;
 }
 
-float pitchCospuls(float x, float centre, int binsperoctave) 
+float pitchCospuls(float x, float centre, int binsperoctave)
 {
     float warpedf = -binsperoctave * (log2(centre) - log2(x));
     float out = cospuls(warpedf, 0.0, 2.0);
@@ -101,25 +101,25 @@ float pitchCospuls(float x, float centre, int binsperoctave)
 bool logFreqMatrix(int fs, int blocksize, float *outmatrix) {
 	// TODO: rewrite so that everyone understands what is done here.
 	// TODO: make this more general, such that it works with all minoctave, maxoctave and whatever nBPS (or check if it already does)
-	
-    int binspersemitone = nBPS; 
+
+    int binspersemitone = nBPS;
     int minoctave = 0; // this must be 0
     int maxoctave = 7; // this must be 7
     int oversampling = 80;
-	
+
     // linear frequency vector
     vector<float> fft_f;
     for (int i = 0; i < blocksize/2; ++i) {
         fft_f.push_back(i * (fs * 1.0 / blocksize));
     }
     float fft_width = fs * 2.0 / blocksize;
-	
+
     // linear oversampled frequency vector
     vector<float> oversampled_f;
     for (int i = 0; i < oversampling * blocksize/2; ++i) {
         oversampled_f.push_back(i * ((fs * 1.0 / blocksize) / oversampling));
     }
-	
+
     // pitch-spaced frequency vector
     int minMIDI = 21 + minoctave * 12 - 1; // this includes one additional semitone!
     int maxMIDI = 21 + maxoctave * 12; // this includes one additional semitone!
@@ -134,7 +134,7 @@ bool logFreqMatrix(int fs, int blocksize, float *outmatrix) {
     cq_f.push_back(440 * pow(2.0,0.083333 * (maxMIDI-69)));
 
     int nFFT = fft_f.size();
-	
+
     vector<float> fft_activation;
     for (int iOS = 0; iOS < 2 * oversampling; ++iOS) {
         float cosp = cospuls(oversampled_f[iOS],fft_f[1],fft_width);
@@ -145,7 +145,7 @@ bool logFreqMatrix(int fs, int blocksize, float *outmatrix) {
     for (int i = 0; i < nFFT * (int)cq_f.size(); ++i) {
         outmatrix[i] = 0.f;
     }
-	
+
     float cq_activation;
     for (int iFFT = 1; iFFT < nFFT; ++iFFT) {
         // find frequency stretch where the oversampled vector can be non-zero (i.e. in a window of width fft_width around the current frequency)
@@ -158,11 +158,11 @@ bool logFreqMatrix(int fs, int blocksize, float *outmatrix) {
                     cq_activation = pitchCospuls(oversampled_f[iOS],cq_f[iCQ],binspersemitone*12);
                     // cerr << oversampled_f[iOS] << " " << cq_f[iCQ] << " " << cq_activation << endl;
                     outmatrix[iFFT + nFFT * iCQ] += cq_activation * fft_activation[iOS-curr_start];
-                }				
+                }
              }
         }
     }
-    return true;	
+    return true;
 }
 
 void dictionaryMatrix(float* dm, float s_param) {
@@ -170,7 +170,7 @@ void dictionaryMatrix(float* dm, float s_param) {
     int binspersemitone = nBPS;
     int minoctave = 0; // this must be 0
     int maxoctave = 7; // this must be 7
-	
+
     // pitch-spaced frequency vector
     int minMIDI = 21 + minoctave * 12 - 1; // this includes one additional semitone!
     int maxMIDI = 21 + maxoctave * 12; // this includes one additional semitone!
@@ -261,7 +261,7 @@ getPluginPath()
 	path.push_back(envPath.substr(index, newindex - index));
 	index = newindex + 1;
     }
-    
+
     path.push_back(envPath.substr(index));
 
     return path;
@@ -287,7 +287,7 @@ static vector<string> staticChordnames() {
     chordnames.push_back("dim");//=1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0
     chordnames.push_back("aug");//=1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0
     chordnames.push_back("");//=0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0
-    chordnames.push_back("");//=0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0 
+    chordnames.push_back("");//=0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0
     chordnames.push_back("7");//=0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,1,0
 	// from here: Harte syntax
     chordnames.push_back("");//=1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0
@@ -306,7 +306,7 @@ static vector<string> staticChordnames() {
     chordnames.push_back(":dim");//=1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0
     chordnames.push_back(":aug");//=1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0
     chordnames.push_back("");//=0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0
-    chordnames.push_back("");//=0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0 
+    chordnames.push_back("");//=0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0
     chordnames.push_back(":7");//=0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,1,0
     return chordnames;
 }
@@ -339,8 +339,8 @@ static vector<float> staticChordvalues() {
     return chordvalues;
 }
 
-vector<string> chordDictionary(vector<float> *mchorddict, vector<vector<int> > *m_chordnotes, float boostN, float harte_syntax) {    
-    
+vector<string> chordDictionary(vector<float> *mchorddict, vector<vector<int> > *m_chordnotes, float boostN, float harte_syntax) {
+
     typedef tokenizer<char_separator<char> > Tok;
     char_separator<char> sep(",; ","=");
 
@@ -348,24 +348,27 @@ vector<string> chordDictionary(vector<float> *mchorddict, vector<vector<int> > *
     string chordDictFilename;
 
     vector<string> ppath = getPluginPath();
-    
+    /*
+    CHANGING CHORDS NOTATION TO NUMBER:
+    {A:1, Bb/A#:2, B:3, C:4, C#/Db:5, D:6, D#/Eb:7, E:8, F:9, F#/Gb:10, G:11, G#/Ab:12}
+     */
 	const char* notenames[24] = {
-	    "A  (bass)","Bb (bass)","B  (bass)","C  (bass)","C# (bass)","D  (bass)","Eb (bass)","E  (bass)","F  (bass)","F# (bass)","G  (bass)","Ab (bass)",
-	    "A","Bb","B","C","C#","D","Eb","E","F","F#","G","Ab"};
+	    "1-  (bass)","2- (bass)","3-  (bass)","4-  (bass)","5- (bass)","6-  (bass)","7- (bass)","8-  (bass)","9-  (bass)","10- (bass)","11-  (bass)","12- (bass)",
+	    "1-","2-","3-","4-","5-","6-","7-","8-","9-","10-","11-","12-"};
 
 	const char* bassnames[13][12] ={
-	    {"A","","B","C","C#","D","","E","","F#","G","G#"},
-	    {"Bb","","C","Db","D","Eb","","F","","G","Ab","A"},
-	    {"B","","C#","D","D#","E","","F#","","G#","A","A#"},
-	    {"C","","D","Eb","E","F","","G","","A","Bb","B"},
-	    {"C#","","D#","E","E#","F#","","G#","","A#","B","B#"},
-	    {"D","","E","F","F#","G","","A","","B","C","C#"},
-	    {"Eb","","F","Gb","G","Ab","","Bb","","C","Db","D"},
-	    {"E","","F#","G","G#","A","","B","","C#","D","D#"},
-	    {"F","","G","Ab","A","Bb","","C","","D","Eb","E"},
-	    {"F#","","G#","A","A#","B","","C#","","D#","E","E#"},
-	    {"G","","A","Bb","B","C","","D","","E","F","F#"},
-	    {"Ab","","Bb","Cb","C","Db","","Eb","","F","Gb","G"},
+	    {"1-","","3-","4-","5-","6-","","8-","","10-","11-","12-"},
+	    {"2-","","4-","5-","6-","7-","","9-","","11-","12-","1-"},
+	    {"3-","","5-","6-","7-","8-","","10-","","12-","1-","2-"},
+	    {"4-","","6-","7-","8-","9-","","11-","","1-","2-","3-"},
+	    {"5-","","7-","8-","9-","10-","","12-","","2-","3-","4-"},
+	    {"6-","","8-","9-","10-","11-","","1-","","3-","4-","5-"},
+	    {"7-","","9-","10-","11-","12-","","2-","","4-","5-","6-"},
+	    {"8-","","10-","11-","12-","1-","","3-","","5-","6-","7-"},
+	    {"9-","","11-","12-","1-","2-","","4-","","6-","7-","8-"},
+	    {"10-","","12-","1-","2-","3-","","5-","","7-","8-","9-"},
+	    {"11-","","1-","2-","3-","4-","","6-","","8-","9-","10-"},
+	    {"12-","","2-","3-","4-","5-","","7-","","9-","10-","11-"},
             {"1","","2","b3","3","4","","5","","6","b7","7"}
 	};
 
@@ -386,8 +389,8 @@ vector<string> chordDictionary(vector<float> *mchorddict, vector<vector<int> > *
 //                cerr << " (not found yet) ..." << endl;
             } else {
 //                cerr << "* WARNING: failed to find chord dictionary, using default chord dictionary." << endl;
-                hasExternalDictinoary = false;                
-            } 
+                hasExternalDictinoary = false;
+            }
         }
     }
 
@@ -395,7 +398,7 @@ vector<string> chordDictionary(vector<float> *mchorddict, vector<vector<int> > *
     string line;
     // int iElement = 0;
     int nChord = 0;
-	
+
 	vector<float> tempChordDict = staticChordvalues();
     vector<string> tempChordNames = staticChordnames();
 	if (harte_syntax == 1.0) {
@@ -409,38 +412,38 @@ vector<string> chordDictionary(vector<float> *mchorddict, vector<vector<int> > *
     if (hasExternalDictinoary && chordDictFile.is_open()) {
         tempChordDict.clear();
         tempChordNames.clear();
-        while (std::getline(chordDictFile, line)) { // loop over lines in chord.dict file	            	
+        while (std::getline(chordDictFile, line)) { // loop over lines in chord.dict file
             // first, get the chord definition
             string chordType;
-            vector<float> tempPCVector;			
+            vector<float> tempPCVector;
             // cerr << line << endl;
             if (!line.empty() && line.substr(0,1) != "#") {
-                Tok tok(line, sep);			
+                Tok tok(line, sep);
                 for(Tok::iterator tok_iter = tok.begin(); tok_iter != tok.end(); ++tok_iter) { // loop over line elements
                     string tempString = *tok_iter;
                     // cerr << tempString << endl;
-                    if (tok_iter == tok.begin()) { // either the chord name or a colon                        
+                    if (tok_iter == tok.begin()) { // either the chord name or a colon
                         if (tempString == "=") {
                             chordType = "";
                         } else {
                             chordType = tempString;
-                            tok_iter++;                            
+                            tok_iter++;
                         }
                     } else {
                         tempChordDict.push_back(lexical_cast<float>(*tok_iter));
                     }
-                }                
+                }
                 tempChordNames.push_back(chordType);
             }
         }
         cerr << "-----------------> " << tempChordNames.size() << endl;
     }
-    
-        
+
+
     for (int iType = 0; iType < (int)tempChordNames.size(); ++iType) {
         // now make all 12 chords of every type
-        for (int iSemitone = 0; iSemitone < 12; iSemitone++) {	
-            vector<int> tempchordnotes;			
+        for (int iSemitone = 0; iSemitone < 12; iSemitone++) {
+            vector<int> tempchordnotes;
             // add bass slash notation
             string slashNotation = "";
             for (int kSemitone = 1; kSemitone < 12; kSemitone++) {
@@ -448,7 +451,7 @@ vector<string> chordDictionary(vector<float> *mchorddict, vector<vector<int> > *
 					if (harte_syntax == 0.0) {
 						slashNotation = bassnames[iSemitone][kSemitone];
 					} else {
-					        slashNotation = bassnames[12][kSemitone]; 
+					        slashNotation = bassnames[12][kSemitone];
                                         }
                 }
             }
@@ -462,21 +465,21 @@ vector<string> chordDictionary(vector<float> *mchorddict, vector<vector<int> > *
                 } else {
                     if (tempChordDict[24*iType+((kSemitone - iSemitone + 12) % 12) + 12] == 1) bassValue = 0.5;
                 }
-                loadedChordDict.push_back(bassValue);                        
+                loadedChordDict.push_back(bassValue);
             }
             for (int kSemitone = 0; kSemitone < 12; kSemitone++) { // chord pitch classes
                 loadedChordDict.push_back(tempChordDict[24*iType+((kSemitone - iSemitone + 12) % 12) + 12]);
                 if (tempChordDict[24*iType+((kSemitone - iSemitone + 12) % 12) + 12] > 0) tempchordnotes.push_back(MIDI_basenote + (kSemitone+12+6) % 12 - 6 + 24);
             }
-            ostringstream os;				
+            ostringstream os;
             if (slashNotation.empty()) {
                 os << notenames[12+iSemitone] << tempChordNames[iType];
             } else {
                 os << notenames[12+iSemitone] << tempChordNames[iType] << "/" << slashNotation;
             }
             // cerr << os.str() << endl;
-            loadedChordNames.push_back(os.str());                
-            
+            loadedChordNames.push_back(os.str());
+
             m_chordnotes->push_back(tempchordnotes);
             // for (int iNote = 0; iNote < tempchordnotes.size(); ++iNote) {
             //     cerr << tempchordnotes[iNote] << " ";
@@ -484,7 +487,7 @@ vector<string> chordDictionary(vector<float> *mchorddict, vector<vector<int> > *
             // cerr << endl;
         }
     }
-    
+
 
     // N type
     loadedChordNames.push_back("N");
@@ -511,11 +514,11 @@ vector<string> chordDictionary(vector<float> *mchorddict, vector<vector<int> > *
             stand = powf(stand,1.0f/exponent) / (1+boostN);
         }
         for (int iST = 0; iST < 24; ++iST) {
-            loadedChordDict[24 * iChord + iST] /= stand;            
+            loadedChordDict[24 * iChord + iST] /= stand;
         }
-        
+
     }
-    
+
 
 
     nChord = 0;
@@ -527,11 +530,9 @@ vector<string> chordDictionary(vector<float> *mchorddict, vector<vector<int> > *
 
     // mchorddict = new float[nChord*24];
     for (int i = 0; i < nChord*24; i++) {
-        mchorddict->push_back(loadedChordDict[i]);			
+        mchorddict->push_back(loadedChordDict[i]);
     }
-	
+
     // cerr << "before leaving" << chordnames[1] << endl;
     return loadedChordNames;
 }
-
-    
