@@ -1,7 +1,6 @@
 $(document).ready(function(){
   var paper = new Raphael("logo", 120, 55);
   var frets = paper.set();
-  alert('test');
   frets.push(
     paper.rect(10, 10, 100, 25, 2),
     paper.path("M10 15L110 15"),
@@ -25,3 +24,4 @@ $(document).ready(function(){
     'stroke-opacity': 0,
     'font-size': 16
   });
+})
