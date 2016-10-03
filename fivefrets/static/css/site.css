@@ -1,0 +1,15 @@
+body, body.pushable > .pusher {
+  background: url('http://fivefrets.com/img/main_banner.jpg') no-repeat left center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#fflogo, #ffsidebarlogo{
+    padding-top: 0.3em;
+}
+#fflogo > svg, #ffsidebarlogo > svg {
+    display: block;
+    margin: 0 auto;
+}

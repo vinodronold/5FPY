@@ -15,13 +15,202 @@
 
 </head>
 
-<body class="ui container fluid">
-  {% include 'navbar.html' %}
+<body>
+    <div class="ui sidebar left vertical inverted borderless labeled icon menu">
+        <div id = "ffsidebarlogo"></div>
+        {% include 'navbar.html' %}
+    </div>
+    <div class = "pusher">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src='{% static "js/semantic.min.js" %}'></script>
-<script src='{% static "js/raphael.min.js" %}'></script>
-<script src='{% static "js/site.js" %}'></script>
+        <div class = "ui grid">
+            <div class = "row">
+                <div class = "two wide computer only column">
+                    <div class="ui left fixed vertical inverted borderless labeled icon menu">
+                        <div id = "fflogo"></div>
+                        {% include 'navbar.html' %}
+                    </div>
+                </div>
+                <div class = "sixteen wide tablet fourteen wide computer column">
+                    <div class = "ui basic padded segment">
+                        <div class = "ui grid">
+                            <div class = "row">
+                                <div class = "mobile only tablet only column">
+                                    <div class="ui icon secondary inverted menu">
+                                        <a class="active item" id = "ffsidebarmenu">
+                                            <i class="black sidebar icon"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "ui basic segment">
+                        <div class="ui fluid search">
+                            <div class="ui fluid left icon input">
+                                <input class="prompt" type="text" placeholder="type here to search songs from youtube . . .">
+                                <!--<div class="ui circular green button">Get Chords</div>-->
+                                <i class="youtube icon"></i>
+                            </div>
+                            <div class="results"></div>
+                        </div>
+                    </div>
+                    <div class = "ui basic segment">
+                        <div class="ui horizontal divider"><div class="ui circular label">Recently Added</div></div>
+                    </div>
+                    <div class="ui centered special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui inverted button">Get Chords</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src="https://i.ytimg.com/vi/mv_XWSAYIb0/mqdefault.jpg">
+                            </div>
+                            <div class="content">
+                                <a class="header">Team Fu</a>
+                                <div class="meta">
+                                    <span class="date">Create in Sep 2014</span>
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="users icon"></i>
+                                    2 Members
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui inverted button">Get Chords</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src="https://i.ytimg.com/vi/mv_XWSAYIb0/mqdefault.jpg">
+                            </div>
+                            <div class="content">
+                                <a class="header">Team Fu</a>
+                                <div class="meta">
+                                    <span class="date">Create in Sep 2014</span>
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="users icon"></i>
+                                    2 Members
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui inverted button">Get Chords</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src="https://i.ytimg.com/vi/mv_XWSAYIb0/mqdefault.jpg">
+                            </div>
+                            <div class="content">
+                                <a class="header">Team Fu</a>
+                                <div class="meta">
+                                    <span class="date">Create in Sep 2014</span>
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="users icon"></i>
+                                    2 Members
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui inverted button">Get Chords</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src="https://i.ytimg.com/vi/mv_XWSAYIb0/mqdefault.jpg">
+                            </div>
+                            <div class="content">
+                                <a class="header">Team Fu</a>
+                                <div class="meta">
+                                    <span class="date">Create in Sep 2014</span>
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="users icon"></i>
+                                    2 Members
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui inverted button">Get Chords</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src="https://i.ytimg.com/vi/mv_XWSAYIb0/mqdefault.jpg">
+                            </div>
+                            <div class="content">
+                                <a class="header">Team Fu</a>
+                                <div class="meta">
+                                    <span class="date">Create in Sep 2014</span>
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="users icon"></i>
+                                    2 Members
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui inverted button">Get Chords</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src="https://i.ytimg.com/vi/mv_XWSAYIb0/mqdefault.jpg">
+                            </div>
+                            <div class="content">
+                                <a class="header">Team Fu</a>
+                                <div class="meta">
+                                    <span class="date">Create in Sep 2014</span>
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="users icon"></i>
+                                    2 Members
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src='{% static "js/semantic.min.js" %}'></script>
+    <script src='{% static "js/raphael.min.js" %}'></script>
+    <script src='{% static "js/site.js" %}'></script>
 </body>
 
 </html>
