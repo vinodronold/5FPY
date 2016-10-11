@@ -6,10 +6,26 @@ body, body.pushable > .pusher {
   background-size: cover;
 }
 
-#fflogo, #ffsidebarlogo{
+div[id^='fflogo_']{
     padding-top: 0.3em;
 }
-#fflogo > svg, #ffsidebarlogo > svg {
+div[id^='fflogo_'] > svg {
     display: block;
     margin: 0 auto;
+}
+.ui.ffdisabled.button{
+    cursor: default;
+    background-image: none!important;
+    box-shadow: none!important;
+    pointer-events: none!important;
+}
+
+.ui.segment.chordsProgresion{
+    position:relative!important;
+    overflow: hidden;
+}
+
+.ui.segment.chordsSeqence{
+  border-radius: 1.5em;
+  float: left;
 }
