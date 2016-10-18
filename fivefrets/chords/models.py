@@ -1,36 +1,5 @@
 from django.db import models
 
-class Composer(models.Model):
-    first_name = models.CharField(max_length=25)
-    last_name = models.CharField(max_length=25)
-    display_name = models.CharField(max_length=50)
-
-class Singer(models.Model):
-    first_name = models.CharField(max_length=25)
-    last_name = models.CharField(max_length=25)
-    display_name = models.CharField(max_length=50)
-
-class Album(models.Model):
-    LANGUAGE_CHOICE = (
-        ('EN', 'English'),
-        ('HI', 'Hindi'),
-        ('KN', 'Kannada'),
-        ('ML', 'Malayalam'),
-        ('TA', 'Tamil'),
-        ('TE', 'Telugu'),
-        ('OT', 'Other'),
-    )
-    name = models.CharField(max_length=100)
-    year = models.IntegerField()
-    language = models.CharField(
-        max_length=2,
-        choices=LANGUAGE_CHOICE,
-        default='OT',
-    )
-
-class Lyric(models.Model):
-    content = models.TextField()
-
 class GuitarChord(models.Model):
     CHORD_CHOICE = (
         ('1', 'A'),
@@ -54,6 +23,7 @@ class GuitarChord(models.Model):
         max_length=2,
         choices=CHORD_CHOICE
     )
+    alt_name =  models.CharField(max_length=10)
     primary = models.BooleanField()
     typ = models.CharField(
         max_length=5,
@@ -68,16 +38,23 @@ class GuitarChord(models.Model):
     string5 = models.IntegerField()
     string6 = models.IntegerField()
 
+    def __str__(self):
+        return self.get_name_display() + '-' + self.typ
+
 class Song(models.Model):
-    album = models.ForeignKey(Album, on_delete=models.CASCADE)
-    composer = models.ForeignKey(Composer, on_delete=models.CASCADE)
-    singers = models.ManyToManyField(Singer)
-    lyric = models.ForeignKey(Lyric, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+    youtube = models.CharField(max_length=50)
+    lyric = models.TextField()
+
+    def __str__(self):
+        return self.name
 
 class SongChord(models.Model):
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
-    chord = models.ForeignKey(GuitarChord, on_delete=models.CASCADE)
+    chord = models.ForeignKey(GuitarChord)
     position = models.IntegerField()
     start = models.IntegerField()
     end = models.IntegerField()
+
+    def __str__(self):
+        return self.song.name
