@@ -1,0 +1,168 @@
+{% extends "master.html" %}
+{% block content %}
+<div class="ui basic segment">
+    <div class="ui inverted segment">
+        <div class="ui basic segment chords">
+            <div class="ui grid">
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">A#</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned orange inverted segment chordslist">B&#9837;m</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+                <div class="four wide tablet two wide computer column">
+                    <div class="ui center aligned segment">X</div>
+                </div>
+            </div>
+        </div>
+        <div class="ui basic padded segment">
+            <div class="ui stackable doubling four column grid">
+                <div class="column">
+                    <div class="ui fluid inverted basic icon buttons">
+                        <button class="ui icon button ff_ytplayer_play"><i class="play icon"></i></button>
+                        <button class="ui icon button ff_ytplayer_stop"><i class="stop icon"></i></button>
+                        <button class="ui icon button ff_ytplayer_fast_backward" title="Start song from begining"><i class="fast backward icon"></i></button>
+                        <button class="ui icon button ff_ytplayer_backward"><i class="backward icon"></i></button>
+                        <button class="ui icon button ff_ytplayer_forward"><i class="forward icon"></i></button>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="ui fluid inverted basic icon buttons">
+                        <button class="ui icon button"><i class="volume down icon"></i></button>
+                        <button class="ui ffdisabled button">Volume: 100</button>
+                        <button class="ui icon button"><i class="volume up icon"></i></button>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="ui fluid inverted basic icon buttons">
+                        <button class="ui icon button"><i class="minus icon"></i></button>
+                        <button class="ui ffdisabled button">Speed: 1.0x</button>
+                        <button class="ui icon button"><i class="plus icon"></i></button>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="column">
+                        <div class="ui fluid inverted basic icon buttons">
+                            <button class="ui icon button"><i class="minus icon"></i></button>
+                            <button class="ui ffdisabled button">Transpose: 0</button>
+                            <button class="ui icon button"><i class="plus icon"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui mobile reversed stackable two column grid">
+            <div class="column">
+                <div class="ui embed" data-source="ff_youtube" data-id="{{ yt_id }}" data-placeholder="https://i.ytimg.com/vi/{{ yt_id }}/hqdefault.jpg">
+                </div>
+            </div>
+            <div class="column">
+                <div class="ui segment">
+                    <div class="ui grid">
+                        <div class="eight wide mobile four wide tablet three wide computer column" id="ffcdia_1" data-ffcdia="0,0,2,2,0,0,0" data-ffcdianame="Em" data-ffcdiastart=1>
+                        </div>
+                        <div class="eight wide mobile four wide tablet three wide computer column" id="ffcdia_2" data-ffcdia="0,0,2,2,1,0,0" data-ffcdianame="E" data-ffcdiastart=1>
+                        </div>
+                        <div class="eight wide mobile four wide tablet three wide computer column" id="ffcdia_3" data-ffcdia="1,0,3,3,2,0,0" data-ffcdianame="F" data-ffcdiastart=1>
+                        </div>
+                        <div class="eight wide mobile four wide tablet three wide computer column" id="ffcdia_4" data-ffcdia="0,0,2,2,0,0,0" data-ffcdianame="Em" data-ffcdiastart=1>
+                        </div>
+                        <div class="eight wide mobile four wide tablet three wide computer column" id="ffcdia_5" data-ffcdia="0,0,2,2,1,0,0" data-ffcdianame="E" data-ffcdiastart=1>
+                        </div>
+                        <div class="eight wide mobile four wide tablet three wide computer column" id="ffcdia_6" data-ffcdia="0,0,2,2,1,0,0" data-ffcdianame="E" data-ffcdiastart=1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

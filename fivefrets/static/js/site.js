@@ -118,6 +118,7 @@ $(document).ready(function(){
             }
         }
     };
+    $('.ui.embed').embed();
     $('#ffsidebarmenu').click(function(){
         $('.ui.sidebar')
             .sidebar('setting', 'transition', 'overlay')
@@ -147,15 +148,15 @@ $(document).ready(function(){
         minCharacters : 3,
         apiSettings   : {
             onResponse: function(youtubeResponse) {
-                var
-                response = {
-                    results : []
+                var response = {
+                  results : []
                 }
                 ;
-                // translate GitHub API response to work with search
+                // translate YouTube API response to work with search
                 $.each(youtubeResponse.items, function(index, item) {
                     response.results.push({
                         title       : item.snippet.title,
+                        url         : '/chords/display/'+item.id.videoId,
                         //description : item.snippet.description,
                         image       : item.snippet.thumbnails.default.url
                     });
