@@ -10,7 +10,7 @@ def index(request):
 
 def display(request, yt_id = ""):
     get_features = features(yt_id);
-    get_features.dowload();
+    # get_features.dowload();
     context = {
         'yt_id' : yt_id
     }
