@@ -1,105 +1,14 @@
-{% extends "master.html" %}
-{% block content %}
+{% extends "master.html" %} {% block content %}
 <div class="ui basic segment">
     <div class="ui inverted segment">
+        <!--{% include "loading_segment.html" %}-->
         <div class="ui basic segment chords">
             <div class="ui grid">
+                {% for chord in chords %}
                 <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">A#</div>
+                    <div class="ui center aligned segment">{{ chord }}</div>
                 </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned orange inverted segment chordslist">B&#9837;m</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
-                <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">X</div>
-                </div>
+                {% endfor %}
             </div>
         </div>
         <div class="ui basic padded segment">
@@ -140,7 +49,7 @@
         </div>
         <div class="ui mobile reversed stackable two column grid">
             <div class="column">
-                <div class="ui embed" data-source="ff_youtube" data-id="{{ yt_id }}" data-placeholder="https://i.ytimg.com/vi/{{ yt_id }}/hqdefault.jpg">
+                <div class="ui embed" data-source="ff_youtube" data-id="{{ song.youtube }}" data-placeholder="https://i.ytimg.com/vi/{{ song.youtube }}/hqdefault.jpg">
                 </div>
             </div>
             <div class="column">
@@ -164,5 +73,4 @@
         </div>
     </div>
 </div>
-
-{%endblock%}
+{% endblock %}

@@ -41,6 +41,11 @@ class GuitarChord(models.Model):
     def __str__(self):
         return self.get_name_display() + '-' + self.typ
 
+    def get_chord(self):
+        if self.typ == "MIN":
+            return self.get_name_display() + "m"
+        return self.get_name_display()
+
 class Song(models.Model):
     name = models.CharField(max_length=100)
     youtube = models.CharField(max_length=50)
@@ -56,5 +61,8 @@ class SongChord(models.Model):
     start = models.IntegerField()
     end = models.IntegerField()
 
+    class Meta:
+        ordering = ['id']
+
     def __str__(self):
-        return self.song.name
+        return self.chord.get_chord()
