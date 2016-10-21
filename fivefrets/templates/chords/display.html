@@ -1,7 +1,11 @@
-{% extends "master.html" %} {% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="ui basic segment">
     <div class="ui inverted segment">
         <!--{% include "loading_segment.html" %}-->
+        <div class="ui basic segment">
+          <h1 class="ui inverted header">{{ song.name }}</h1>
+          <h5 class="ui inverted header">{{song_info}}</h5>
+        </div>
         <div class="ui basic segment chords">
             <div class="ui grid">
                 {% for chord in chords %}

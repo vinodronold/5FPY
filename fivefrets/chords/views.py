@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.forms.models import model_to_dict
 
 from .models import Song, SongChord
 from .estimate.features import features
@@ -14,11 +13,12 @@ def index(request):
 def display(request, yt_id = ""):
     try:
         song_instance = Song.objects.get(youtube = yt_id)
-        chords_instance = SongChord.objects.filter(song_id__exact = song_instance.id)
-        # print(chords_instance)
+        for e in song_instance.get_songchord_list():
+            print(e.chord_diagram())
         context = {
-            'song'   : song_instance,
-            'chords' : chords_instance
+            'song'      : song_instance,
+            'song_info' : song_instance.get_song_info(),
+            'chords'    : song_instance.get_songchord_list()
         }
     except Song.DoesNotExist:
         get_features = features(yt_id);
