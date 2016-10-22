@@ -27,7 +27,7 @@ class Chord(models.Model):
         max_length=5,
         choices=CHORD_TYPE_CHOICE
     )
-    alt_name =  models.CharField(max_length=10)
+    alt_name =  models.CharField(max_length=10, blank=True)
 
     def __str__(self):
         return self.get_name_display() + '-' + self.typ
@@ -46,14 +46,14 @@ class Chord(models.Model):
 class GuitarChord(models.Model):
     chord = models.ForeignKey(Chord, on_delete=models.CASCADE, default=0)
     primary = models.BooleanField(default=False)
-    fret = models.PositiveSmallIntegerField(default=0)
-    barre = models.PositiveSmallIntegerField(default=0)
-    string6 = models.PositiveSmallIntegerField(default=0)
-    string5 = models.PositiveSmallIntegerField(default=0)
-    string4 = models.PositiveSmallIntegerField(default=0)
-    string3 = models.PositiveSmallIntegerField(default=0)
-    string2 = models.PositiveSmallIntegerField(default=0)
-    string1 = models.PositiveSmallIntegerField(default=0)
+    fret = models.CharField(max_length=2, default=0)
+    barre = models.CharField(max_length=2, default=0)
+    string6 = models.CharField(max_length=2, default=0)
+    string5 = models.CharField(max_length=2, default=0)
+    string4 = models.CharField(max_length=2, default=0)
+    string3 = models.CharField(max_length=2, default=0)
+    string2 = models.CharField(max_length=2, default=0)
+    string1 = models.CharField(max_length=2, default=0)
 
     def __str__(self):
         return self.chord.get_chord()
@@ -70,7 +70,7 @@ class GuitarChord(models.Model):
 
 class Album(models.Model):
     name = models.CharField(max_length=100)
-    year = models.PositiveSmallIntegerField()
+    year = models.PositiveSmallIntegerField(blank=True)
 
     class Meta:
         ordering = ['name']
@@ -102,7 +102,7 @@ class Song(models.Model):
     singers = models.ManyToManyField(Singer)
     name = models.CharField(max_length=100)
     youtube = models.CharField(max_length=50)
-    lyric = models.TextField()
+    lyric = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
