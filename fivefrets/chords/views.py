@@ -13,12 +13,14 @@ def index(request):
 def display(request, yt_id = ""):
     try:
         song_instance = Song.objects.get(youtube = yt_id)
-        for e in song_instance.get_songchord_list():
-            print(e.chord_diagram())
+        chord_list, chord_diagram = song_instance.get_songchord_list()
+        #for e in song_instance.get_songchord_list():
+            #print(e.chord_diagram())
         context = {
-            'song'      : song_instance,
-            'song_info' : song_instance.get_song_info(),
-            'chords'    : song_instance.get_songchord_list()
+            'song'          : song_instance,
+            'song_info'     : song_instance.get_song_info(),
+            'chord_list'    : chord_list,
+            'chord_diagram' : chord_diagram
         }
     except Song.DoesNotExist:
         get_features = features(yt_id);

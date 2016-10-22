@@ -34,15 +34,16 @@ $(document).ready(function(){
             fretSpace = 15,
             strings = 6,
             frets = 4,
-            startFretNum = $(this).attr('data-ffcdiastart'),
             padding = 5,
             //position = [1,0,0,3,3,3,0]; // [BARRE, STRING6, STRING5, STRING4, STRING3, STRING2, STRING1]
-            position = $(this).attr('data-ffcdia').split(","); // [BARRE, STRING6, STRING5, STRING4, STRING3, STRING2, STRING1]
+            ffcdia = $(this).attr('data-ffcdia').split(","); // [START_FRET, BARRE, STRING6, STRING5, STRING4, STRING3, STRING2, STRING1]
         var paperx = startx + (stringSpace * (strings - 1)) + padding,
             papery = starty + (fretSpace * frets) + padding,
             fretWidth = stringSpace * (strings - 1),
             chordNamex = startx + ((stringSpace * (strings - 1)) / 2),
             chordNamey = starty - padding,
+            startFretNum = ffcdia.slice(0, 1),
+            position = ffcdia.slice(1, 8),
             stringPath,
             fretPath;
         stringPath = "";
@@ -64,7 +65,7 @@ $(document).ready(function(){
         );
         for (cnt = 0; cnt < frets; cnt++){
             cdia_frets.push(
-                cdia.text(padding, starty + ((fretSpace * cnt)+(fretSpace / 2)), (Number(startFretNum) + cnt))
+                cdia.text(padding, starty + ((fretSpace * cnt)+(fretSpace / 2)), (Number(startFretNum[0]) + cnt))
             );
         }
 
@@ -79,8 +80,6 @@ $(document).ready(function(){
             cdia_finger.push(
                 cdia.path(barrePath)
             );
-        }else{
-            console.log("Invalid Barre Positiion : " + position[0] + " Total Frets : " + frets);
         }
         $.each(position,function(index, value){
             if (index > 0 && value > 0){

@@ -41,13 +41,13 @@ class Chord(models.Model):
         primary_chord = 0
         for primary_chord_param in GuitarChord.objects.filter(chord_id__exact = self.id, primary__exact = True):
             primary_chord = primary_chord_param.diagram()
-        return primary_chord
+            return primary_chord
 
 class GuitarChord(models.Model):
     chord = models.ForeignKey(Chord, on_delete=models.CASCADE, default=0)
     primary = models.BooleanField(default=False)
-    barre = models.PositiveSmallIntegerField(default=0)
     fret = models.PositiveSmallIntegerField(default=0)
+    barre = models.PositiveSmallIntegerField(default=0)
     string6 = models.PositiveSmallIntegerField(default=0)
     string5 = models.PositiveSmallIntegerField(default=0)
     string4 = models.PositiveSmallIntegerField(default=0)
@@ -59,7 +59,8 @@ class GuitarChord(models.Model):
         return self.chord.get_chord()
 
     def diagram(self):
-        return str(self.barre) + ',' + \
+        return str(self.fret) + ',' + \
+               str(self.barre) + ',' + \
                str(self.string6) + ',' + \
                str(self.string5) + ',' + \
                str(self.string4) + ',' + \
@@ -107,9 +108,13 @@ class Song(models.Model):
         return self.name
 
     def get_songchord_list(self):
-        return SongChord.objects.filter(song_id__exact = self.id)
+        songchord_list = SongChord.objects.filter(song_id__exact = self.id)
+        return songchord_list, songchord_list.order_by('chord_id').distinct('chord_id')
 
     def get_song_info(self):
+        c = SongChord.objects.filter(song_id__exact = self.id).order_by('chord_id').distinct('chord_id')
+        for dia in c:
+            print(dia.chord_diagram())
         return "%s | %s" % (
             self.composer,
             " | ".join(singer.name for singer in self.singers.all())

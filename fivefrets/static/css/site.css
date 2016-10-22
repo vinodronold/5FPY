@@ -1,31 +1,38 @@
-body, body.pushable > .pusher {
-  background: url('http://fivefrets.com/img/main_banner.jpg') no-repeat left center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+body, body.pushable> .pusher {
+    background: url('http://fivefrets.com/img/main_banner.jpg') no-repeat left center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
-div[id^='fflogo_']{
+div[id^='fflogo_'] {
     padding-top: 0.3em;
 }
-div[id^='fflogo_'] > svg {
+
+div[id^='fflogo_']> svg {
     display: block;
     margin: 0 auto;
 }
-.ui.ffdisabled.button{
+
+div[id^='ffcdia_']> svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.ui.ffdisabled.button {
     cursor: default;
     background-image: none!important;
     box-shadow: none!important;
     pointer-events: none!important;
 }
 
-.ui.segment.chordsProgresion{
-    position:relative!important;
+.ui.segment.chordsProgresion {
+    position: relative!important;
     overflow: hidden;
 }
 
-.ui.segment.chordsSeqence{
-  border-radius: 1.5em;
-  float: left;
+.ui.segment.chordsSeqence {
+    border-radius: 1.5em;
+    float: left;
 }
