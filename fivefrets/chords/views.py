@@ -14,8 +14,8 @@ def display(request, yt_id = ""):
     try:
         song_instance = Song.objects.get(youtube = yt_id)
         chord_list, chord_diagram = song_instance.get_songchord_list()
-        #for e in song_instance.get_songchord_list():
-            #print(e.chord_diagram())
+        # for e in chord_diagram:
+        #    print(e.chord_diagram)
         context = {
             'song'          : song_instance,
             'song_info'     : song_instance.get_song_info(),

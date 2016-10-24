@@ -16,42 +16,49 @@
             </div>
         </div>
         <div class="ui basic segment">
-            <div class="ui mobile reversed stackable two column grid">
+            <div class="ui mobile stackable two column grid">
                 <div class="column">
                     <div class="ui stackable two column grid">
                         <div class="column">
-                            <div class="ui fluid inverted basic icon buttons">
-                                <button class="ui icon button ff_ytplayer_play"><i class="play icon"></i></button>
-                                <button class="ui icon button ff_ytplayer_stop"><i class="stop icon"></i></button>
-                                <button class="ui icon button ff_ytplayer_fast_backward" title="Start song from begining"><i class="fast backward icon"></i></button>
-                                <button class="ui icon button ff_ytplayer_backward"><i class="backward icon"></i></button>
-                                <button class="ui icon button ff_ytplayer_forward"><i class="forward icon"></i></button>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="ui fluid inverted basic icon buttons">
-                                <button class="ui icon button"><i class="volume down icon"></i></button>
-                                <button class="ui ffdisabled button">Volume: 100</button>
-                                <button class="ui icon button"><i class="volume up icon"></i></button>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="ui fluid inverted basic icon buttons">
-                                <button class="ui icon button"><i class="minus icon"></i></button>
-                                <button class="ui ffdisabled button">Speed: 1.0x</button>
-                                <button class="ui icon button"><i class="plus icon"></i></button>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="column">
-                                <div class="ui fluid inverted basic icon buttons">
-                                    <button class="ui icon button"><i class="minus icon"></i></button>
-                                    <button class="ui ffdisabled button">Transpose: 0</button>
-                                    <button class="ui icon button"><i class="plus icon"></i></button>
+                            <div class="ui grid">
+                                <div class="row">
+                                    <div class="ui fluid inverted basic icon buttons">
+                                        <button class="ui icon button ff_ytplayer_play"><i class="play icon"></i></button>
+                                        <button class="ui icon button ff_ytplayer_stop"><i class="stop icon"></i></button>
+                                        <button class="ui icon button ff_ytplayer_fast_backward" title="Start song from begining"><i class="fast backward icon"></i></button>
+                                        <button class="ui icon button ff_ytplayer_backward"><i class="backward icon"></i></button>
+                                        <button class="ui icon button ff_ytplayer_forward"><i class="forward icon"></i></button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="ui fluid inverted basic icon buttons">
+                                        <button class="ui icon button"><i class="volume down icon"></i></button>
+                                        <button class="ui ffdisabled button">Volume: 100</button>
+                                        <button class="ui icon button"><i class="volume up icon"></i></button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="ui fluid inverted basic icon buttons">
+                                        <button class="ui icon button"><i class="minus icon"></i></button>
+                                        <button class="ui ffdisabled button">Speed: 1.0x</button>
+                                        <button class="ui icon button"><i class="plus icon"></i></button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="ui fluid inverted basic icon buttons">
+                                        <button class="ui icon button"><i class="minus icon"></i></button>
+                                        <button class="ui ffdisabled button">Transpose: 0</button>
+                                        <button class="ui icon button"><i class="plus icon"></i></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <div id="ffcdia_curr" data-ffcdia="1,0,0,2,2,2,0" data-ffcdianame="A">
+                            </div>
+                        </div>
                     </div>
+
                 </div>
                 <div class="column">
                     {% include "chords/chord_diagram.html" %}
