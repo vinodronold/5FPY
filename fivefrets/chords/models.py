@@ -113,8 +113,8 @@ class Song(models.Model):
 
     def get_song_info(self):
         c = SongChord.objects.filter(song_id__exact = self.id).order_by('chord_id').distinct('chord_id')
-        for dia in c:
-            print(dia.chord_diagram())
+        #for dia in c:
+        #    print(dia.chord_diagram())
         return "%s | %s" % (
             self.composer,
             " | ".join(singer.name for singer in self.singers.all())

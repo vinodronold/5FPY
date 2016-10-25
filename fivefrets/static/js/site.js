@@ -36,7 +36,7 @@ $(document).ready(function(){
             frets = 4,
             padding = 5,
             //position = [1,0,0,3,3,3,0]; // [BARRE, STRING6, STRING5, STRING4, STRING3, STRING2, STRING1]
-            ffcdia = $(this).attr('data-ffcdia').split(","); // [START_FRET, BARRE, STRING6, STRING5, STRING4, STRING3, STRING2, STRING1]
+            ffcdia = $(this).data('ffcdia').split(","); // [START_FRET, BARRE, STRING6, STRING5, STRING4, STRING3, STRING2, STRING1]
         var paperx = startx + (stringSpace * (strings - 1)) + padding,
             papery = starty + (fretSpace * frets) + padding,
             fretWidth = stringSpace * (strings - 1),
@@ -52,14 +52,18 @@ $(document).ready(function(){
             stringPath = stringPath + "M"+ stringStartx + " " + starty + " " + "L" + stringStartx + " " + (starty + (fretSpace * frets));
         }
         fretPath = "";
+        if (startFretNum == 1) {
+            fretPath = fretPath + "M" + startx + " " + (starty + 1) + "L" + (startx + fretWidth) + " " + (starty + 1);
+        }
         for (cnt = 1; cnt < frets; cnt++){
             var fretStarty = starty + (fretSpace * cnt);
             fretPath = fretPath + "M" + startx + " " + fretStarty + "L" + (startx + fretWidth) + " " + fretStarty;
         }
         var cdia = new Raphael($(this).attr('id'), paperx, papery);
+        cdia.setViewBox(0, 0, paperx, paperx, 1)
         var cdia_frets = cdia.set();
         cdia_frets.push(
-            cdia.text(chordNamex, chordNamey, $(this).attr('data-ffcdianame')),
+            cdia.text(chordNamex, chordNamey, $(this).data('ffcdianame')),
             cdia.rect(startx, starty, fretWidth, (fretSpace * frets), 2),
             cdia.path(stringPath + fretPath)
         );
@@ -89,9 +93,10 @@ $(document).ready(function(){
             }
 
         })
-        cdia_finger.attr({stroke: "#333",'fill': '#333'});
+        cdia_frets.attr({stroke: $(this).data('ffcdiacolor')});
+        cdia_finger.attr({stroke: $(this).data('ffcdiacolor'),'fill': $(this).data('ffcdiacolor')});
     });
-    $("div[id^='ffcdia_'] > svg").addClass("ui centered image");
+    $("div[id^='ffcdia_'] > svg").addClass("ui fluid centered image");
 });
 $(document).ready(function(){
     $.fn.embed.settings.sources = {
