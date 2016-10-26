@@ -2,6 +2,7 @@ from __future__ import print_function
 import librosa
 import subprocess
 import csv
+from chords.models import *
 
 class features:
 
@@ -34,23 +35,36 @@ class features:
             ])
 
     def process_beats(self):
-
-        audio, sample_rate = librosa.load(self.filepath + self.id + '.' + self.ext)
-        tempo, beat_frames = librosa.beat.beat_track(y=audio, sr=sample_rate)
+        print('processing beats . . .')
+        print('loading . . .')
+        #audio, sample_rate = librosa.load(self.filepath + self.id + '.' + self.ext)
+        print('get beat frames . . .')
+        #tempo, beat_frames = librosa.beat.beat_track(y=audio, sr=sample_rate)
         #print('Estimated tempo: {:.2f} beats per minute'.format(tempo))
-        beat_times = librosa.frames_to_time(beat_frames, sr=sample_rate)
-        #librosa.output.times_csv(self.filepath + self.id + 'librosa_beat_times.csv', beat_times)
+        print('beat frames to time . . .')
+        #beat_times = librosa.frames_to_time(beat_frames, sr=sample_rate)
+        #librosa.output.times_csv(self.filepath + self.id + '_librosa_beat_times.csv', beat_times)
 
-        with open(self.filepath + self.id + '_vamp_' + self.vamp_plugin + '.csv', 'r') as f:
+        print('load chords . . .')
+        with open(self.filepath + self.id + '_vamp_' + self.vamp_plugin.replace(':', '_') + '.csv', 'r') as f:
             reader = csv.reader(f)
             chords = list(reader)
-            #for c in chords:
-            #    print(c)
-        #with open(self.filepath + self.id + 'librosa_beat_times.csv', 'r') as f:
-        #    reader = csv.reader(f)
-        #    beat_times = list(reader)
+
+        with open(self.filepath + self.id + '_librosa_beat_times.csv', 'r') as f:
+            reader = csv.reader(f)
+            beat_times = list(reader)
+
+        print('match chords and beat . . .')
         chord_idx = 0
         for beat_time in beat_times:
-            if float(beat_time) >= float(chords[chord_idx + 1][0]):
+            if float(beat_time[0]) >= float(chords[chord_idx + 1][0]):
                 chord_idx += 1
-            print(beat_time[0], chords[chord_idx][0], chords[chord_idx][1])
+            est_chord = chords[chord_idx][1].split('-')
+            id_chord_item = ''
+            if len(est_chord) > 1:
+                id_chords = Chord.objects.filter(name__exact = chords[chord_idx][1],
+                                                typ__exact = 'MIN' if est_chord[1] == 'm' else 'MAJ')
+                for id_chord in id_chords:
+                    print(id_chord)
+
+            print(beat_time[0], chords[chord_idx][0], est_chord)
