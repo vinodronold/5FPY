@@ -9,7 +9,7 @@ class features:
         self.id = yt_id
         self.filepath = '/home/py/projects/tmp/'
         self.ext = 'mp3'
-        self.vamp_plugin = 'nnls-chroma_chordino_simplechord'
+        self.vamp_plugin = 'nnls-chroma:chordino:simplechord'
 
     def dowload(self):
         result = subprocess.check_call([
@@ -33,17 +33,24 @@ class features:
             '--force',
             ])
 
-    def convert_to_list(self):
+    def process_beats(self):
+
+        audio, sample_rate = librosa.load(self.filepath + self.id + '.' + self.ext)
+        tempo, beat_frames = librosa.beat.beat_track(y=audio, sr=sample_rate)
+        #print('Estimated tempo: {:.2f} beats per minute'.format(tempo))
+        beat_times = librosa.frames_to_time(beat_frames, sr=sample_rate)
+        #librosa.output.times_csv(self.filepath + self.id + 'librosa_beat_times.csv', beat_times)
+
         with open(self.filepath + self.id + '_vamp_' + self.vamp_plugin + '.csv', 'r') as f:
             reader = csv.reader(f)
             chords = list(reader)
-
-        #for e in chords:
-        #    print(e)
-
-    def processing_beats(self):
-        audio, sample_rate = librosa.load(self.filepath + self.id + '.' + self.ext)
-        tempo, beat_frames = librosa.beat.beat_track(y=audio, sr=sample_rate)
-        print('Estimated tempo: {:.2f} beats per minute'.format(tempo))
-        beat_times = librosa.frames_to_time(beat_frames, sr=sample_rate)
-        librosa.output.times_csv(self.filepath + self.id + 'librosa_beat_times.csv', beat_times)
+            #for c in chords:
+            #    print(c)
+        #with open(self.filepath + self.id + 'librosa_beat_times.csv', 'r') as f:
+        #    reader = csv.reader(f)
+        #    beat_times = list(reader)
+        chord_idx = 0
+        for beat_time in beat_times:
+            if float(beat_time) >= float(chords[chord_idx + 1][0]):
+                chord_idx += 1
+            print(beat_time[0], chords[chord_idx][0], chords[chord_idx][1])

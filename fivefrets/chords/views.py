@@ -14,9 +14,10 @@ def display(request, yt_id = ""):
     try:
         song_instance = Song.objects.get(youtube = yt_id)
         chord_list, chord_diagram = song_instance.get_songchord_list()
-        get_features = features(yt_id);
-        get_features.dowload();
-        get_features.extract();
+        #get_features = features(yt_id);
+        #get_features.dowload();
+        #get_features.extract();
+        #get_features.process_beats();
 
         # for e in chord_diagram:
         #    print(e.chord_diagram)
@@ -28,7 +29,9 @@ def display(request, yt_id = ""):
         }
     except Song.DoesNotExist:
         get_features = features(yt_id);
-        # get_features.dowload();
+        get_features.dowload();
+        get_features.extract();
+        get_features.process_beats();
         context = {
             'song' : 'NOT FOUND'
         }

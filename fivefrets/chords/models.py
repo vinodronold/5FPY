@@ -97,11 +97,11 @@ class Singer(models.Model):
         return self.name
 
 class Song(models.Model):
-    album = models.ForeignKey(Album, default=0)
-    composer = models.ForeignKey(Composer, default=0)
-    singers = models.ManyToManyField(Singer)
+    album = models.ForeignKey(Album, blank=True, null=True)
+    composer = models.ForeignKey(Composer, blank=True, null=True)
+    singers = models.ManyToManyField(Singer, blank=True)
     name = models.CharField(max_length=100)
-    youtube = models.CharField(max_length=50)
+    youtube = models.CharField(max_length=100)
     lyric = models.TextField(blank=True)
 
     def __str__(self):
@@ -112,20 +112,25 @@ class Song(models.Model):
         return songchord_list, songchord_list.order_by('chord_id').distinct('chord_id')
 
     def get_song_info(self):
-        c = SongChord.objects.filter(song_id__exact = self.id).order_by('chord_id').distinct('chord_id')
-        #for dia in c:
-        #    print(dia.chord_diagram())
-        return "%s | %s" % (
-            self.composer,
-            " | ".join(singer.name for singer in self.singers.all())
-        )
+        info = ''
+        if self.album:
+            info = '%s | ' % (self.album)
+        if self.composer:
+            info = '%s%s | ' % (info, self.composer)
+        info = info + ' | '.join(singer.name for singer in self.singers.all())
+
+        #info = "%s | %s" % (
+        #    self.composer,
+        #    " | ".join(singer.name for singer in self.singers.all())
+        #)
+        return info
 
 class SongChord(models.Model):
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
     chord = models.ForeignKey(Chord)
-    position = models.PositiveSmallIntegerField()
-    start = models.PositiveSmallIntegerField()
-    end = models.PositiveSmallIntegerField()
+    modified_chord = models.ForeignKey(Chord, related_name = 'modified_chord', blank=True, null=True)
+    beat_position = models.FloatField(default = -1)
+    start_time = models.FloatField(default = -1)
 
     class Meta:
         ordering = ['id']
