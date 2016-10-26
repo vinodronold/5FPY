@@ -14,6 +14,7 @@ class Chord(models.Model):
         ('10', 'F#'),
         ('11', 'G'),
         ('12', 'G#'),
+        ('N', 'X')
     )
     CHORD_TYPE_CHOICE = (
         ('MAJ', 'Major'),
