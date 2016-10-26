@@ -56,15 +56,31 @@ class features:
 
         print('match chords and beat . . .')
         chord_idx = 0
+
+        # Adding Songs
+        add_song = Song(name = 'Thangame', youtube = self.id)
+        add_song.save()
+        insert_list = []
+
         for beat_time in beat_times:
+
             if float(beat_time[0]) >= float(chords[chord_idx + 1][0]):
                 chord_idx += 1
-            est_chord = chords[chord_idx][1].split('-')
-            id_chord_item = ''
-            if len(est_chord) > 1:
-                id_chords = Chord.objects.filter(name__exact = chords[chord_idx][1],
-                                                typ__exact = 'MIN' if est_chord[1] == 'm' else 'MAJ')
-                for id_chord in id_chords:
-                    print(id_chord)
 
-            print(beat_time[0], chords[chord_idx][0], est_chord)
+            est_chord = chords[chord_idx][1].split('-')
+            id_chord_typ = ''
+            if len(est_chord) > 1:
+                id_chord_typ = est_chord[1]
+
+            id_chords = Chord.objects.filter(name__exact = est_chord[0],
+                                             typ__exact = 'MIN' if id_chord_typ == 'm' else 'MAJ')
+            for id_chord in id_chords:
+                id_chord = id_chord
+                break
+            insert_list.append(SongChord(song = add_song,
+                                         chord = id_chord,
+                                         beat_position = beat_time[0],
+                                         start_time = chords[chord_idx][0]))
+            # print(beat_time[0], chords[chord_idx][0], est_chord, id_chord, id_chord.id)
+
+        SongChord.objects.bulk_create(insert_list)
