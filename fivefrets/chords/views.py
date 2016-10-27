@@ -29,8 +29,8 @@ def display(request, yt_id = ""):
         }
     except Song.DoesNotExist:
         get_features = features(yt_id);
-        #get_features.dowload();
-        #get_features.extract();
+        get_features.dowload();
+        get_features.extract();
         get_features.process_beats();
         context = {
             'song' : 'NOT FOUND'

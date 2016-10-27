@@ -37,12 +37,12 @@ class features:
     def process_beats(self):
         print('processing beats . . .')
         print('loading . . .')
-        #audio, sample_rate = librosa.load(self.filepath + self.id + '.' + self.ext)
+        audio, sample_rate = librosa.load(self.filepath + self.id + '.' + self.ext)
         print('get beat frames . . .')
-        #tempo, beat_frames = librosa.beat.beat_track(y=audio, sr=sample_rate)
+        tempo, beat_frames = librosa.beat.beat_track(y=audio, sr=sample_rate)
         #print('Estimated tempo: {:.2f} beats per minute'.format(tempo))
         print('beat frames to time . . .')
-        #beat_times = librosa.frames_to_time(beat_frames, sr=sample_rate)
+        beat_times = librosa.frames_to_time(beat_frames, sr=sample_rate)
         #librosa.output.times_csv(self.filepath + self.id + '_librosa_beat_times.csv', beat_times)
 
         print('load chords . . .')
@@ -50,21 +50,21 @@ class features:
             reader = csv.reader(f)
             chords = list(reader)
 
-        with open(self.filepath + self.id + '_librosa_beat_times.csv', 'r') as f:
-            reader = csv.reader(f)
-            beat_times = list(reader)
+        #with open(self.filepath + self.id + '_librosa_beat_times.csv', 'r') as f:
+        #    reader = csv.reader(f)
+        #    beat_times = list(reader)
 
         print('match chords and beat . . .')
         chord_idx = 0
 
         # Adding Songs
-        add_song = Song(name = 'Thangame', youtube = self.id)
+        add_song = Song(name = 'asdasd', youtube = self.id)
         add_song.save()
         insert_list = []
 
         for beat_time in beat_times:
 
-            if float(beat_time[0]) >= float(chords[chord_idx + 1][0]):
+            if float(beat_time) >= float(chords[chord_idx + 1][0]):
                 chord_idx += 1
 
             est_chord = chords[chord_idx][1].split('-')
@@ -79,7 +79,7 @@ class features:
                 break
             insert_list.append(SongChord(song = add_song,
                                          chord = id_chord,
-                                         beat_position = beat_time[0],
+                                         beat_position = beat_time,
                                          start_time = chords[chord_idx][0]))
             # print(beat_time[0], chords[chord_idx][0], est_chord, id_chord, id_chord.id)
 
