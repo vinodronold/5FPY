@@ -110,7 +110,7 @@ class Song(models.Model):
 
     def get_songchord_list(self):
         songchord_list = SongChord.objects.filter(song_id__exact = self.id)
-        return songchord_list, songchord_list.order_by('chord_id').distinct('chord_id')
+        return songchord_list, songchord_list.exclude(chord_id__exact = 25).order_by('chord_id').distinct('chord_id')
 
     def get_song_info(self):
         info = ''

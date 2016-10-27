@@ -10,7 +10,7 @@
             <div class="ui grid">
                 {% for chord in chord_list %}
                 <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment">{{ chord }}</div>
+                    <div class="ui center aligned segment chordslist">{{ chord }}</div>
                 </div>
                 {% endfor %}
             </div>
@@ -18,12 +18,23 @@
         <div class="ui basic segment">
             <div class="ui mobile stackable two column grid">
                 <div class="column">
-                    <div class="ui attached embed" data-source="ff_youtube" data-id="{{ song.youtube }}" data-placeholder="https://i.ytimg.com/vi/{{ song.youtube }}/hqdefault.jpg">
-                    </div>
-                    <div class="ui bottom attached fluid black icon buttons">
+                    <button class="ui basic inverted fluid icon button">
+                      <i class="play icon"></i> Play
+                    </button>
+                </div>
+                <div class="column">
+                    <div class="ui fluid inverted basic icon buttons">
                         <button class="ui icon button"><i class="minus icon"></i></button>
                         <button class="ui ffdisabled button">Transpose: 0</button>
                         <button class="ui icon button"><i class="plus icon"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui basic segment">
+            <div class="ui mobile stackable two column grid">
+                <div class="column">
+                    <div class="ui embed" data-source="ff_youtube" data-id="{{ song.youtube }}" data-placeholder="https://i.ytimg.com/vi/{{ song.youtube }}/hqdefault.jpg">
                     </div>
                 </div>
                 <div class="column">
