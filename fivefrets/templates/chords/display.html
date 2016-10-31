@@ -10,7 +10,7 @@
             <div class="ui grid">
                 {% for chord in chord_list %}
                 <div class="four wide tablet two wide computer column">
-                    <div class="ui center aligned segment chordslist">{{ chord }}</div>
+                    <div class="ui center aligned segment chordslist" data-chordid="{{ chord.chord.name }}" data-chordtyp="{{ chord.chord.typ }}"></div>
                 </div>
                 {% endfor %}
             </div>
@@ -24,9 +24,9 @@
                 </div>
                 <div class="column">
                     <div class="ui fluid inverted basic icon buttons">
-                        <button class="ui icon button"><i class="minus icon"></i></button>
-                        <button class="ui ffdisabled button">Transpose: 0</button>
-                        <button class="ui icon button"><i class="plus icon"></i></button>
+                        <button class="ui icon button" id="ff_transpose_minus"><i class="minus icon"></i></button>
+                        <button class="ui ffdisabled button" id="ff_transpose_num">0</button>
+                        <button class="ui icon button" id="ff_transpose_plus"><i class="plus icon"></i></button>
                     </div>
                 </div>
             </div>
@@ -41,27 +41,6 @@
                     {% include "chords/chord_diagram.html" %}
                 </div>
             </div>
-            <!--<div class="ui mobile stackable two column grid">
-                <div class="column">
-                    <div class="ui center aligned stackable two column grid">
-                        <div class="column">
-                            {% include "chords/controls.html" %}
-                        </div>
-                        <div class="column">
-                            <div class="ui basic segment">
-                                <div id="ffcdia_curr" data-ffcdia="1,0,0,2,2,2,0" data-ffcdianame="A" data-ffcdiacolor="#eee">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="ui basic segment">
-                        <div class="ui embed" data-source="ff_youtube" data-id="{{ song.youtube }}" data-placeholder="https://i.ytimg.com/vi/{{ song.youtube }}/hqdefault.jpg">
-                        </div>
-                    </div>
-                </div>
-            </div>-->
         </div>
 
         <div class="ui basic segment">

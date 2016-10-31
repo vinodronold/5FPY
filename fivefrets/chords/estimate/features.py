@@ -1,5 +1,8 @@
-from __future__ import print_function
+from __future__ import print_function, unicode_literals
+import datetime
+import youtube_dl
 import librosa
+import traceback
 import subprocess
 import csv
 from chords.models import *
@@ -8,22 +11,47 @@ class features:
 
     def __init__(self, yt_id):
         self.id = yt_id
+        self.title = ''
         self.filepath = '/home/py/projects/tmp/'
         self.ext = 'mp3'
         self.vamp_plugin = 'nnls-chroma:chordino:simplechord'
 
     def dowload(self):
-        result = subprocess.check_call([
-            'youtube-dl',
-            '--no-playlist',
-            '--extract-audio',
-            '--audio-format', self.ext,
-            '--output', self.filepath + '%(id)s.%(ext)s',
-            '--cache-dir', self.filepath + 'youtube-dl',
-            self.id,
-            ])
+        print("Start download - %s" % str(datetime.datetime.now()))
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'extractaudio' : True,
+            'audioformat' : self.ext,
+            #'outtmpl': '%(id)s.%(ext)s',
+            'outtmpl': self.filepath + '%(id)s.%(ext)s',
+            'noplaylist' : True,
+            'quiet': True,
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': self.ext,
+                'preferredquality': '192',
+            }]
+        }
+        ydl = youtube_dl.YoutubeDL(ydl_opts)
+        with ydl:
+            try:
+                result = ydl.extract_info(self.id, download=True)
+                self.title = result['title']
+            except Exception as e:
+                print("Can't download audio! %s\n" % traceback.format_exc())
+
+        #result = subprocess.check_call([
+        #    'youtube-dl',
+        #    '--no-playlist',
+        #    '--extract-audio',
+        #    '--audio-format', self.ext,
+        #    '--output', self.filepath + '%(id)s.%(ext)s',
+        #    '--cache-dir', self.filepath + 'youtube-dl',
+        #    self.id,
+        #    ])
 
     def extract(self):
+        print("Start extract - %s" % str(datetime.datetime.now()))
         result = subprocess.check_call([
             'sonic-annotator',
             '-d',
@@ -35,6 +63,7 @@ class features:
             ])
 
     def process_beats(self):
+        print("Start process_beats - %s" % str(datetime.datetime.now()))
         print('processing beats . . .')
         print('loading . . .')
         audio, sample_rate = librosa.load(self.filepath + self.id + '.' + self.ext)
@@ -58,7 +87,7 @@ class features:
         chord_idx = 0
 
         # Adding Songs
-        add_song = Song(name = 'asdasd', youtube = self.id)
+        add_song = Song(name = self.title, youtube = self.id)
         add_song.save()
         insert_list = []
 

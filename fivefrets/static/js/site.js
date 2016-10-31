@@ -133,19 +133,35 @@ $(document).ready(function() {
         on: 'hover'
     });
 
-    var pos = 0;
+    $('#ff_transpose_plus').click(function() {
+        $(".ui.segment.chordslist").each(function(index) {
+            var m_chordid = $(this).attr('data-chordid')
+            if (m_chordid != 'N') {
+                if (m_chordid == '12') {
+                    m_chordid = 0;
+                }
+                m_chordid = Number(m_chordid) + 1;
+                $(this).attr('data-chordid', m_chordid);
+            }
+        });
+        var transpose_num = $("#ff_transpose_num").text();
+        $("#ff_transpose_num").text(Number(transpose_num) + 1);
+    });
 
-    function scrollList() {
-        $(".chordsList").css("left", pos + "em");
-        pos = pos - 0.2;
-        // FOR 0.1em shift and 25ms - 1s is 4em
-        if (pos == -10) {
-            $(".chordsList").css("left", "0em");
-            clearInterval(timer);
-        }
-    }
-
-    var timer = setInterval(scrollList, 25);
+    $('#ff_transpose_minus').click(function() {
+        $(".ui.segment.chordslist").each(function(index) {
+            var m_chordid = $(this).attr('data-chordid')
+            if (m_chordid != 'N') {
+                if (m_chordid == '1') {
+                    m_chordid = 13;
+                }
+                m_chordid = Number(m_chordid) - 1;
+                $(this).attr('data-chordid', m_chordid);
+            }
+        });
+        var transpose_num = $("#ff_transpose_num").text();
+        $("#ff_transpose_num").text(Number(transpose_num) - 1);
+    });
 
     $('.ui.search')
         .search({

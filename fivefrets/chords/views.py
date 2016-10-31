@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -19,8 +20,8 @@ def display(request, yt_id = ""):
         #get_features.extract();
         #get_features.process_beats();
 
-        # for e in chord_diagram:
-        #    print(e.chord_diagram)
+        #for e in chord_list:
+        #    print(e.chord.name)
         context = {
             'song'          : song_instance,
             'song_info'     : song_instance.get_song_info(),
@@ -28,10 +29,12 @@ def display(request, yt_id = ""):
             'chord_diagram' : chord_diagram
         }
     except Song.DoesNotExist:
+        print("Start - %s" % str(datetime.datetime.now()))
         get_features = features(yt_id);
         get_features.dowload();
         get_features.extract();
         get_features.process_beats();
+        print("Finish - %s" % str(datetime.datetime.now()))
         context = {
             'song' : 'NOT FOUND'
         }
