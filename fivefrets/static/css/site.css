@@ -28,7 +28,7 @@ div[id^='ffcdia_']> svg {
 }
 
 .ui.segment.chords {
-    height: 16.5rem;
+    height: 27.5rem;
     /* 1rem padding top and bottom + 3.5rem for each segment box */
     overflow-y: hidden;
 }

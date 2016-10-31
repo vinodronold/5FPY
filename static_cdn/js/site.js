@@ -133,17 +133,34 @@ $(document).ready(function() {
         on: 'hover'
     });
 
+    $('#ff_transpose_plus').click(function() {
+        $(".ui.segment.chordslist").each(function(index) {
+            var m_chordid = $(this).attr('data-chordid')
+            if (m_chordid != 'N') {
+                if (m_chordid == '12') {
+                    m_chordid = 0;
+                }
+                m_chordid = Number(m_chordid) + 1;
+                $(this).attr('data-chordid', m_chordid);
+            }
+        });
+        var transpose_num = $("#ff_transpose_num").text();
+        $("#ff_transpose_num").text(Number(transpose_num) + 1);
+    });
+
     $('#ff_transpose_minus').click(function() {
         $(".ui.segment.chordslist").each(function(index) {
             var m_chordid = $(this).attr('data-chordid')
             if (m_chordid != 'N') {
                 if (m_chordid == '1') {
-                    m_chordid = 13
+                    m_chordid = 13;
                 }
-                m_chordid = Number(m_chordid) - 1
+                m_chordid = Number(m_chordid) - 1;
                 $(this).attr('data-chordid', m_chordid);
             }
         });
+        var transpose_num = $("#ff_transpose_num").text();
+        $("#ff_transpose_num").text(Number(transpose_num) - 1);
     });
 
     $('.ui.search')
