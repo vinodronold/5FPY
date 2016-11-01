@@ -9,7 +9,7 @@
         <div class="ui basic segment">
             <div class="ui mobile stackable two column grid">
                 <div class="column">
-                    <button class="ui basic inverted fluid icon button">
+                    <button class="ui basic inverted fluid icon button" id="ff_play">
                       <i class="play icon"></i> Play
                     </button>
                 </div>
@@ -34,7 +34,7 @@
         <div class="ui basic segment">
             <div class="ui mobile stackable two column grid">
                 <div class="column">
-                    <div class="ui embed" data-source="ff_youtube" data-id="{{ song.youtube }}" data-placeholder="https://i.ytimg.com/vi/{{ song.youtube }}/hqdefault.jpg">
+                    <div class="ui embed" id='ff_ui_embed' data-source="ff_youtube" data-id="{{ song.youtube }}" data-placeholder="https://i.ytimg.com/vi/{{ song.youtube }}/hqdefault.jpg">
                     </div>
                 </div>
                 <div class="column">
