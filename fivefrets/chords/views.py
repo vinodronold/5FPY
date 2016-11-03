@@ -21,7 +21,7 @@ def display(request, yt_id = ""):
         #get_features.process_beats();
 
         #for e in chord_list:
-        #    print(e.chord.name)
+        #    print(e.beat_position)
         context = {
             'song'          : song_instance,
             'song_info'     : song_instance.get_song_info(),
