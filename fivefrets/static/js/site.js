@@ -209,9 +209,22 @@ $(document).ready(function() {
             }
         });
     };
-    if (typeof playing === 'undefined' || playing === null) {
-        var playing = false;
+    if (typeof ffchordlist === 'undefined' || ffchordlist === null) {
+        var ffchordlist = {};
     };
+
+    $(".chordslist").each(function(index) {
+        var ffchordlist_item = {};
+        ffchordlist_item.curr = $(this);
+        if (index > 0) {
+            ffchordlist_item.prev = ffchordlist[Number($(this).data('chordidx')) - 1].curr;
+        } else {
+            ffchordlist_item.prev = null;
+        }
+        ffchordlist[$(this).data('chordidx')] = ffchordlist_item;
+        //console.log(index, $(this).data('chordidx'), $(this).data('postn'));
+    });
+    console.log(ffchordlist);
     if (typeof traverse_chord === 'undefined' || traverse_chord === null) {
         var traverse_chord = function(idx) {
             var ffchordlist_pos = 0;
@@ -236,6 +249,9 @@ $(document).ready(function() {
             }, 20);
         }
     }
+    if (typeof playing === 'undefined' || playing === null) {
+        var playing = false;
+    };
     var pausingVideo = function(triggerPause) {
         if (triggerPause === true) {
             player.pauseVideo();
@@ -282,7 +298,7 @@ $(document).ready(function() {
             pausingVideo(false);
             console.log('ENDED');
         } else if (event.data == YT.PlayerState.PLAYING) {
-            traverse_chord(1);
+            //traverse_chord(1);
             playingVideo(false);
             console.log('PLAYING');
         } else if (event.data == YT.PlayerState.PAUSED) {

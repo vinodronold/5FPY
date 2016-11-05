@@ -50,7 +50,7 @@
                 <div class="ui grid">
                     {% for chord in chord_list %}
                         <div class="four wide tablet two wide computer column">
-                            <div class="ui center aligned segment chordslist" id="ffchordlist_{{forloop.counter}}" data-chordid="{{ chord.chord.name }}" data-chordtyp="{{ chord.chord.typ }}" data-postn="{{ chord.beat_position }}"></div>
+                            <div class="ui center aligned segment chordslist" id="ffchordlist" data-chordidx="{{ forloop.counter }}" data-chordid="{{ chord.chord.name }}" data-chordtyp="{{ chord.chord.typ }}" data-postn="{{ chord.beat_position }}"></div>
                         </div>
                     {% endfor %}
                 </div>
