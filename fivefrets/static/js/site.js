@@ -224,30 +224,58 @@ $(document).ready(function() {
         ffchordlist[$(this).data('chordidx')] = ffchordlist_item;
         //console.log(index, $(this).data('chordidx'), $(this).data('postn'));
     });
-    console.log(ffchordlist);
-    if (typeof traverse_chord === 'undefined' || traverse_chord === null) {
-        var traverse_chord = function(idx) {
-            var ffchordlist_pos = 0;
-            var traverse_chord_int = setInterval(function() {
-                var ffchordlist = '#ffchordlist_' + Number(idx),
-                    ffchordlist_f = '#ffchordlist_',
-                    ffchordlist_p = '#ffchordlist_',
-                    ffCurTime = player.getCurrentTime();
-                if (ffCurTime >= ffchordlist_pos) {
-                    if (Number(idx) > 1) {
-                        ffchordlist_p = ffchordlist_p + (Number(idx) - 1)
-                    }
-                    $(ffchordlist).addClass("orange inverted");
-                    $(ffchordlist_p).removeClass("orange inverted");
-
-                    ffchordlist_f = ffchordlist_f + (Number(idx) + 1);
-                    ffchordlist_pos = $(ffchordlist_f).data('postn');
-                    idx = idx + 1;
-                    console.log(ffchordlist_f, ffchordlist, ffchordlist_p, ffCurTime, ffchordlist_pos);
-                }
-
-            }, 20);
+    var chord_transition_t;
+    var chord_transition = function(stop_transition) {
+        var ffstart_time = 0,
+            startpos = 0;
+        startpos = $('.chordslist.orange.inverted').data('chordidx');
+        if (!startpos) {
+            startpos = 1;
         }
+        if (typeof chord_transition_int === 'undefined' || chord_transition_int === null) {
+            var chord_transition_int = function() {
+                chord_transition_t = setInterval(function() {
+                    var ffCurTime = player.getCurrentTime();
+                    if (ffCurTime > ffstart_time) {
+                        ffchordlist[startpos].curr.addClass("orange inverted");
+                        if (startpos > 1) {
+                            ffchordlist[startpos].prev.removeClass("orange inverted");
+                        }
+                        startpos++;
+                        ffstart_time = ffchordlist[startpos].curr.data('postn');
+                        if (!ffstart_time) {
+                            clearInterval(chord_transition_t);
+                        }
+                    }
+                    if (Math.abs(ffCurTime - ffstart_time) > 1) {
+                        console.log('seek occurred');
+                    }
+                }, 20);
+            }
+        }
+        if (stop_transition === false) {
+            console.log('start chord_transition', startpos);
+            clearInterval(chord_transition_t);
+            chord_transition_int();
+        } else {
+            console.log('stop chord_transition', startpos);
+            clearInterval(chord_transition_t);
+        }
+    }
+    var seekToClickPostn = function(obj) {
+        var seekToClickPostn_tout = setTimeout(function() {
+            if ($('.chordslist.orange.inverted').length) {
+                $('.chordslist.orange.inverted').removeClass('orange inverted');
+                if (obj) {
+                    obj.addClass('orange inverted');
+                    player.seekTo(Number(obj.data('postn')), true);
+                } else {
+                    player.seekTo(0, true);
+                };
+                clearTimeout(seekToClickPostn_tout);
+                console.log('removed Highlight');
+            }
+        }, 20);
     }
     if (typeof playing === 'undefined' || playing === null) {
         var playing = false;
@@ -270,7 +298,8 @@ $(document).ready(function() {
     };
     $('#ff_start').click(function() {
         if (player) {
-            player.seekTo(0, true)
+            chord_transition(true, 0);
+            seekToClickPostn();
         }
     });
     $('#ff_play').click(function() {
@@ -285,9 +314,10 @@ $(document).ready(function() {
         };
     });
     $('.ui.segment.chordslist').click(function() {
-        console.log($(this).data('postn'));
+        console.log('seek to ', $(this).data('postn'));
         if (player) {
-            player.seekTo(Number($(this).data('postn')), true)
+            chord_transition(true, 0);
+            seekToClickPostn($(this));
         }
     });
 
@@ -298,12 +328,13 @@ $(document).ready(function() {
             pausingVideo(false);
             console.log('ENDED');
         } else if (event.data == YT.PlayerState.PLAYING) {
-            //traverse_chord(1);
             playingVideo(false);
+            chord_transition(false, 0);
             console.log('PLAYING');
         } else if (event.data == YT.PlayerState.PAUSED) {
             //clearInterval(traverse_chord_int);
             pausingVideo(false);
+            chord_transition(true, 0);
             console.log('PAUSED');
         } else if (event.data == YT.PlayerState.BUFFERING) {
             pausingVideo(false);
