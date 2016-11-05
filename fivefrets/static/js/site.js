@@ -214,25 +214,26 @@ $(document).ready(function() {
     };
     if (typeof traverse_chord === 'undefined' || traverse_chord === null) {
         var traverse_chord = function(idx) {
-            ffchordlist_pos = 0;
+            var ffchordlist_pos = 0;
             var traverse_chord_int = setInterval(function() {
-                var ffchordlist = '#ffchordlist_' + idx,
+                var ffchordlist = '#ffchordlist_' + Number(idx),
                     ffchordlist_f = '#ffchordlist_',
-                    ffchordlist_p = '#ffchordlist_';
-                if (player.getCurrentTime() >= ffchordlist_pos) {
-                    if (idx > 1) {
-                        ffchordlist_p = ffchordlist_p + (idx - 1)
+                    ffchordlist_p = '#ffchordlist_',
+                    ffCurTime = player.getCurrentTime();
+                if (ffCurTime >= ffchordlist_pos) {
+                    if (Number(idx) > 1) {
+                        ffchordlist_p = ffchordlist_p + (Number(idx) - 1)
                     }
                     $(ffchordlist).addClass("orange inverted");
                     $(ffchordlist_p).removeClass("orange inverted");
 
-                    ffchordlist_f = ffchordlist_f + (idx + 1);
-                    ffchordlist_pos = $(ffchordlist_p).data('postn')
-                    idx += 1;
+                    ffchordlist_f = ffchordlist_f + (Number(idx) + 1);
+                    ffchordlist_pos = $(ffchordlist_f).data('postn');
+                    idx = idx + 1;
+                    console.log(ffchordlist_f, ffchordlist, ffchordlist_p, ffCurTime, ffchordlist_pos);
                 }
-                console.log(ffchordlist_f, ffchordlist, ffchordlist_p, player.getCurrentTime(), ffchordlist_pos);
 
-            }, 250);
+            }, 20);
         }
     }
     var pausingVideo = function(triggerPause) {

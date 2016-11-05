@@ -39,6 +39,10 @@ div[id^='ffcdia_']> svg {
     cursor: pointer;
 }
 
+.ui.segment.chorddiagram {
+    min-height: 17.5rem;
+}
+
 #ff_transpose_num:before {
     content: "Transpose: ";
 }
