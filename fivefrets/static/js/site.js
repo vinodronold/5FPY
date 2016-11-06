@@ -204,7 +204,7 @@ $(document).ready(function() {
         console.log('onYouTubeIframeAPIReady');
         player = new YT.Player('ff_ytplayer', {
             events: {
-                //'onReady': onPlayerReady,
+                'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
             }
         });
@@ -224,10 +224,14 @@ $(document).ready(function() {
         ffchordlist[$(this).data('chordidx')] = ffchordlist_item;
         //console.log(index, $(this).data('chordidx'), $(this).data('postn'));
     });
-    var chord_transition_t;
+    var no_of_chords = 8,
+        chordSegment = $(".ui.segment.chords");
+    chordSegment.scrollTop(0);
+
+    var chord_transition_t,
+        ffstart_time = 0,
+        startpos = 0;
     var chord_transition = function(stop_transition) {
-        var ffstart_time = 0,
-            startpos = 0;
         startpos = $('.chordslist.orange.inverted').data('chordidx');
         if (!startpos) {
             startpos = 1;
@@ -241,14 +245,34 @@ $(document).ready(function() {
                         if (startpos > 1) {
                             ffchordlist[startpos].prev.removeClass("orange inverted");
                         }
+                        if (startpos > no_of_chords && (startpos % no_of_chords) == 1) {
+                            // chordSegment.scrollTop(((startpos / no_of_chords) - 1) * 77);
+                            chordSegment.animate({
+                                scrollTop: (((startpos / no_of_chords) - 1) * 77)
+                            }, 500);
+                        }
                         startpos++;
-                        ffstart_time = ffchordlist[startpos].curr.data('postn');
-                        if (!ffstart_time) {
+                        if (typeof ffchordlist[startpos] === 'undefined') {
+                            console.log('transition ended');
                             clearInterval(chord_transition_t);
+                        } else {
+                            ffstart_time = ffchordlist[startpos].curr.data('postn');
                         }
                     }
-                    if (Math.abs(ffCurTime - ffstart_time) > 1) {
-                        console.log('seek occurred');
+                    if (Math.abs(ffCurTime - ffstart_time) > 3 && startpos > 2) {
+                        //console.log('seek occurred');
+                        $.each(ffchordlist, function(idx) {
+                            if ($(this)[0].curr.data('postn') > ffCurTime) {
+                                console.log('seek occurred', ffCurTime, ffstart_time);
+                                //clearInterval(chord_transition_t);
+                                seekToClickPostn($(this)[0].curr, true);
+                                //chord_transition_int();
+                                startpos = $(this)[0].curr.data('chordidx');
+                                ffstart_time = ffchordlist[Number(startpos) + 1].curr.data('postn');
+                                console.log(idx, $(this)[0].curr.data('postn'));
+                                return false;
+                            }
+                        });
                     }
                 }, 20);
             }
@@ -262,15 +286,22 @@ $(document).ready(function() {
             clearInterval(chord_transition_t);
         }
     }
-    var seekToClickPostn = function(obj) {
+    var seekToClickPostn = function(obj, seekFromVideo) {
         var seekToClickPostn_tout = setTimeout(function() {
             if ($('.chordslist.orange.inverted').length) {
                 $('.chordslist.orange.inverted').removeClass('orange inverted');
                 if (obj) {
                     obj.addClass('orange inverted');
-                    player.seekTo(Number(obj.data('postn')), true);
+                    if (seekFromVideo === false) {
+                        if (Number(obj.data('postn')) <= no_of_chords) {
+                            chordSegment.scrollTop(0);
+                        }
+                        player.seekTo(Number(obj.data('postn')), true);
+                    }
                 } else {
-                    player.seekTo(0, true);
+                    if (seekFromVideo === false) {
+                        player.seekTo(0, true);
+                    }
                 };
                 clearTimeout(seekToClickPostn_tout);
                 console.log('removed Highlight');
@@ -295,11 +326,16 @@ $(document).ready(function() {
         $('#ff_play').html('<i class="pause icon"></i>');
         playing = true;
         console.log('playingVideo');
+        if (typeof ffchordlist[startpos] === 'undefined') {
+            console.log('REPLAY');
+            seekToClickPostn(ffchordlist[1].curr, true);
+        }
     };
     $('#ff_start').click(function() {
         if (player) {
             chord_transition(true, 0);
-            seekToClickPostn();
+            chordSegment.scrollTop(0);
+            seekToClickPostn('', false);
         }
     });
     $('#ff_play').click(function() {
@@ -317,9 +353,13 @@ $(document).ready(function() {
         console.log('seek to ', $(this).data('postn'));
         if (player) {
             chord_transition(true, 0);
-            seekToClickPostn($(this));
+            seekToClickPostn($(this), false);
         }
     });
+
+    function onPlayerReady() {
+        player.setPlaybackQuality('tiny');
+    }
 
     function onPlayerStateChange(event) {
         if (event.data == -1) {
@@ -332,9 +372,8 @@ $(document).ready(function() {
             chord_transition(false, 0);
             console.log('PLAYING');
         } else if (event.data == YT.PlayerState.PAUSED) {
-            //clearInterval(traverse_chord_int);
-            pausingVideo(false);
             chord_transition(true, 0);
+            pausingVideo(false);
             console.log('PAUSED');
         } else if (event.data == YT.PlayerState.BUFFERING) {
             pausingVideo(false);
