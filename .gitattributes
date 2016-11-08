@@ -1,2 +1,5 @@
 #pattern  filter=crypt diff=crypt
-static_cdn/js/site.js  filter=crypt diff=crypt
+static_cdn/js/site.js filter=crypt diff=crypt
+fivefrets/static/js/site.js filter=crypt diff=crypt
+static_cdn/css/site.css filter=crypt diff=crypt
+fivefrets/static/css/site.css filter=crypt diff=crypt
