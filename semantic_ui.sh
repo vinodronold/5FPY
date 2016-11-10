@@ -6,7 +6,7 @@ gulp build
 echo 'copying css to static . . .'
 cp dist/semantic.min.css ../../fivefrets/static/css/semantic.min.css
 echo 'copying js to static . . .'
-cp dist/semantic.min.js ../../fivefrets/static/js/semantic.min.js
+cp dist/semantic.min.js ../../fivefrets/static/js/lib/semantic.min.js
 echo 'copying theme'
 cp -R dist/themes/ ../../fivefrets/static/css/
 cd ../..

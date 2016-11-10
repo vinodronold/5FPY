@@ -1,8 +1,8 @@
 #pattern  filter=crypt diff=crypt
 fivefrets/fivefrets/ffset.py filter=crypt diff=crypt
 fivefrets/fivefrets/settings.py filter=crypt diff=crypt
-static_cdn/js/site.js filter=crypt diff=crypt
-fivefrets/static/js/site.js filter=crypt diff=crypt
+static_cdn/js/* filter=crypt diff=crypt
+fivefrets/static/js/* filter=crypt diff=crypt
 static_cdn/css/site.css filter=crypt diff=crypt
 fivefrets/static/css/site.css filter=crypt diff=crypt
 fivefrets/chords/estimate/* filter=crypt diff=crypt

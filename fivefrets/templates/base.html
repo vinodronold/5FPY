@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title>fivefrets.com | Home</title>
-        <script src='{% static "js/modernizr-custom.js" %}'></script>
+        <!--<script src='{% static "js/lib/modernizr-custom.js" %}'></script>-->
         <link rel="stylesheet" href='{% static "css/semantic.min.css" %}'>
         <link rel='stylesheet' href='{% static "css/site.css" %}'/>
     </head>
@@ -36,10 +36,12 @@
                 </div>
             </div>
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src='{% static "js/semantic.min.js" %}'></script>
-        <script src='{% static "js/raphael.min.js" %}'></script>
-        <script src='{% static "js/site.js" %}'></script>
+        <script src='{% static "js/require.js" %}' data-main='{% static "js/main-chords.js" %}'></script>
+        <script src='{% static "js/require-config.js" %}'></script>
+        <!--<script src='{% static "js/lib/jquery-3.1.1.min.js" %}'></script>
+        <script src='{% static "js/lib/semantic.min.js" %}'></script>
+        <script src='{% static "js/lib/raphael.min.js" %}'></script>
+        <script src='{% static "js/lib/site.js" %}'></script>-->
     </body>
 
 </html>
