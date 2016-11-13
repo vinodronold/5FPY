@@ -32,7 +32,7 @@ def display(request, yt_id = ""):
         print("Start - %s" % str(datetime.datetime.now()))
         get_features = features(yt_id);
         get_features.dowload();
-        get_features.extract();
+        # get_features.extract();
         get_features.process_beats();
         print("Finish - %s" % str(datetime.datetime.now()))
         context = {
